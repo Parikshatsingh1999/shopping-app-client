@@ -12,16 +12,12 @@ async function FetchBuilder(path = "collections", body = {}) {
     let result;
     try {
         result = await fetch(App_Url, fetchBody);
-        if (result.ok) {
-            result = await result.json();
-        } else {
-            result = null;
-        }
+        result = await result?.json() || null;
+        return result;
     } catch (error) {
         console.error(error?.message || `error while fetching ${App_Url}`);
-        result = null
+        return result = null
     }
-    return result
 }
 
 export { FetchBuilder };

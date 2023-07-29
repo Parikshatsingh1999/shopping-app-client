@@ -3,9 +3,13 @@ import "./Login.css"
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { FetchBuilder } from '../services/FetchBuidler';
+import { useDispatch } from "react-redux";
+import { setLogIn } from "../store/login/loginSlice";
+import { alertMessage } from "../helpers/alerts";
 
 const Login = () => {
 
+    const dispatch = useDispatch();
     const [isLogging, setIsLogging] = useState(true);
     const navigate = useNavigate();
     const emailRef = useRef();
@@ -13,8 +17,16 @@ const Login = () => {
     const firstNameRef = useRef();
     const lastNameRef = useRef()
 
+    const dispatchLogin = (value) => {
+        const data = {
+            setLogin: value,
+            token: ""
+        }
+        dispatch(setLogIn(data));
+        alertMessage("You logged In Successfully");
+    }
+
     const userSignUp = (event) => {
-        event.preventDefault();
         event.preventDefault();
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
@@ -23,11 +35,14 @@ const Login = () => {
         if (email && password && firstName && lastName) {
             FetchBuilder("users", { payload: { email, password, firstName, lastName }, method: "POST" }).then(res => {
                 if (res && !res.error) {
-                    sessionStorage.setItem("userLogged", true);
+                    dispatchLogin(true)
                     navigate("/");
+                } else if (res?.error) {
+                    alertMessage(res.error);
                 }
             }).catch(error => {
-                console.error(error?.message || "Error while loggin user");
+                console.error(error?.message || "Error while Signing Up user");
+                alertMessage(error?.message || "Error while Signing Up user")
             })
         }
     }
@@ -39,11 +54,14 @@ const Login = () => {
         if (email && password) {
             FetchBuilder("login", { payload: { email, password }, method: "POST" }).then(res => {
                 if (res && !res.error) {
-                    sessionStorage.setItem("userLogged", true);
+                    dispatchLogin(true)
                     navigate("/");
+                } else if (res?.error) {
+                    alertMessage(res.error);
                 }
             }).catch(error => {
                 console.error(error?.message || "Error while loggin user");
+                alertMessage(error?.message || "Error while loggin user");
             })
         }
     }
