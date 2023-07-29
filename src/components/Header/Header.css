@@ -1,0 +1,35 @@
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-img img {
+    width: 25%;
+}
+
+h3 {
+    margin: auto;
+}
+
+.logo-img,
+.icon-box {
+    width: 30%;
+}
+
+.search-box {
+    flex-grow: 1;
+}
+
+.search-box input {
+    width: 60%;
+    padding: 1%;
+    font-size: 20px;
+
+}
+
+.icon-box {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}

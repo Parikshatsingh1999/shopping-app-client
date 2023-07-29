@@ -1,0 +1,16 @@
+.product-list {
+    display: flex;
+    justify-content: space-around;
+    max-width: 80%;
+    margin: auto;
+    flex-wrap: wrap;
+    padding: 2%;
+    position: relative;
+}
+
+.product-card {
+    padding: 1%;
+    flex-basis: 25%;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

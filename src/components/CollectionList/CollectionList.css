@@ -1,0 +1,9 @@
+  .collection-list {
+    display: flex;
+    justify-content: space-around;
+    max-width: 80%;
+    margin: auto;
+    flex-wrap: wrap;
+    padding: 2%;
+    position: relative;
+  }

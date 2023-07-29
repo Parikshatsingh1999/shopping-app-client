@@ -1,0 +1,19 @@
+.productItem {
+    padding: 4% 0;
+}
+
+.product-wrapper {
+    display: flex;
+    justify-content: space-around;
+    max-width: 80%;
+    margin: auto;
+}
+
+.product-wrapper .image-container {
+    flex-basis: 40%;
+}
+
+.product-details {
+    text-align: left;
+    flex-basis: 30%;
+}

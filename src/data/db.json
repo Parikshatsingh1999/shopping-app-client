@@ -1,0 +1,36 @@
+{
+  "collections": [
+    {
+      "id": 1,
+      "title": "Collection 1",
+      "link": "/collection/1"
+    },
+    {
+      "id": 2,
+      "title": "Collection 2",
+      "link": "/collection/2"
+    },
+    {
+      "id": 3,
+      "title": "Collection 3",
+      "link": "/collection/3"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "collectionId": 1,
+      "title": "Product 1"
+    },
+    {
+      "id": 2,
+      "collectionId": 1,
+      "title": "Product 2"
+    },
+    {
+      "id": 3,
+      "collectionId": 2,
+      "title": "Product 3"
+    }
+  ]
+}
