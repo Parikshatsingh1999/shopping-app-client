@@ -2,7 +2,7 @@ import "./collectionItem.css";
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { FetchBuilder } from "../../services/FetchBuidler";
+import { createRequest } from "../../services/FetchBuidler";
 import { ProductCard } from "../../snippets/ProductCard/ProductCard";
 
 export const CollectionItem = () => {
@@ -12,7 +12,7 @@ export const CollectionItem = () => {
   useEffect(() => {
     if (id) {
       const path = `collections/${id}`;
-      FetchBuilder(path).then((res) => {
+      createRequest.fetch(path).then((res) => {
         if (!res.error) {
           setCollection(res);
         }
@@ -30,7 +30,7 @@ export const CollectionItem = () => {
             {!!collection.products?.length && (
               <div className="product-list">
                 {collection.products.map((product) => (
-                  <ProductCard key={product._id} product={product} />
+                  <ProductCard key={product.id} product={product} />
                 ))}
               </div>
             )}

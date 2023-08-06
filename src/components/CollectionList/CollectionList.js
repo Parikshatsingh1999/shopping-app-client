@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./CollectionList.css"
-import { FetchBuilder } from '../../services/FetchBuidler'
+import { createRequest } from '../../services/FetchBuidler'
 import CollectionCard from '../../snippets/CollectionCard/CollectionCard';
 
 const CollectionList = () => {
@@ -10,7 +10,7 @@ const CollectionList = () => {
 
     useEffect(() => {
         try {
-            FetchBuilder().then(res => {
+            createRequest.fetch('collections').then(res => {
                 if (res) {
                     setList(res);
                 } else {
@@ -35,9 +35,8 @@ const CollectionList = () => {
                 {
                     !error && !!list.length && (
                         list.map(item => (
-                            <CollectionCard key={item._id} collectionItem={item} />
+                            <CollectionCard key={item.id} collectionItem={item} />
                         ))
-
                     )
                 }
             </div>

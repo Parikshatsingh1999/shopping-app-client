@@ -1,28 +1,28 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, } from 'react-router-dom'
 import "./Header.css"
 import logo from "../../assets/logo.jpg"
 import { useSelector, useDispatch } from 'react-redux';
-import { setLogIn } from '../../store/login/loginSlice';
-import { alertMessage } from '../../helpers/alerts';
+import { logOut } from '../../store/login/loginSlice';
+import { fetchCart } from '../../store/cart/cartSlice';
+
 
 
 const Header = () => {
-
-    const login = useSelector(state => state.login);
-
     const dispatch = useDispatch();
+    const login = useSelector(state => state.login);
+    const cart = useSelector(state => state.cart);
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        dispatch(fetchCart()).then(res => {
+            if (res?.payload?.error === "User not authenticated") {
+                dispatch(logOut());
+            }
+        })
+    }, [login.token, dispatch])
 
     const logoutUser = () => {
-        const data = {
-            setLogin: false,
-            token: ""
-        }
-        dispatch(setLogIn(data));
-        alertMessage("You Logged Out");
-        navigate("/");
+        dispatch(logOut());
     }
 
     return (
@@ -45,7 +45,7 @@ const Header = () => {
                         {login.isLoggedIn && <p onClick={logoutUser} className='btn-link'>LogOut</p>}
                     </div>
                     <div className='cart-box'>
-                        <p> Cart </p>
+                        <Link to="/cart" className='btn-link'> Cart {!!cart.count && <span> {cart.price} - ( {cart.count} ) </span>} </Link>
                     </div>
                 </div>
             </div>

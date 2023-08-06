@@ -10,9 +10,9 @@ const CollectionCard = ({ collectionItem }) => {
     }
 
     return (
-        <Link className='collection-card btn-link' to={`/collections/${collectionItem?._id}`}>
+        <Link className='collection-card btn-link' to={`/collections/${collectionItem?.id}`}>
             <div>
-                <p> {collectionItem?._id} </p>
+                <p> {collectionItem?.id} </p>
                 <p> {collectionItem?.title} </p>
             </div>
         </Link>

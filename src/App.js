@@ -8,6 +8,7 @@ import NotFound from './pages/NotFound';
 import Collection from './pages/Collection';
 import Product from './pages/Product';
 import Login from './pages/Login';
+import Cart from './pages/Cart';
 
 function App() {
   return (
@@ -19,8 +20,8 @@ function App() {
           <Route exact path='/collections/:id' element={<Collection />} />
           <Route exact path='/products/:id' element={<Product />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/cart" element={<Cart />} />
           <Route path='*' element={<NotFound />} />
-
         </Routes>
       </main>
       <Footer />
