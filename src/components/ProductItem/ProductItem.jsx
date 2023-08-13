@@ -2,7 +2,6 @@ import "./ProductItem.css";
 import { useEffect, useState, useRef } from "react";
 import { createRequest } from "../../services/FetchBuidler";
 import { useParams } from "react-router-dom";
-import image from "../../assets/product-image.png";
 import { alertMessage } from "../../helpers/alerts";
 import { useSelector, useDispatch } from "react-redux";
 import { addItemToCart } from "../../store/cart/cartSlice";
@@ -14,6 +13,7 @@ export const ProductItem = () => {
   const { id } = useParams();
   const dispath = useDispatch();
   const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
   const quantityRef = useRef();
 
   useEffect(() => {
@@ -27,6 +27,7 @@ export const ProductItem = () => {
             res.error || `Something went wrong while getting product info`
           );
         }
+        setLoading(false);
       });
     }
   }, [id]);
@@ -40,49 +41,54 @@ export const ProductItem = () => {
 
   return (
     <div>
-      {!product && <div> Product Not Found </div>}
-      {!!product && (
-        <div className="productItem">
-          <div className="product-wrapper">
-            <div className="image-container">
-              <img src={image} alt="product-featured" />
-            </div>
-            <div className="product-details">
-              <h4 className="heading"> {product.title} </h4>
-              <p>
-                {product.currency} {product.price}
-              </p>
-              <p>{product.description}</p>
-              <form onSubmit={addItem} disabled={cart.isUpdating}>
-                <div className="add-to-cart">
-                  <div>
-                    <input
-                      type="number"
-                      min={1}
-                      defaultValue={1}
-                      ref={quantityRef}
-                      onChange={(e) =>
-                        e.target.value <= 0 && (e.target.value = 1)
-                      }
-                    />
-                  </div>
-                  {!!login.isLoggedIn && (
-                    <button disabled={cart.isUpdating} type="submit">
-                      Add to cart
-                    </button>
-                  )}
-
-                  {!login.isLoggedIn && (
-                    <p>
-                      Please <Link to="/login"> login</Link> to add this item to
-                      cart
-                    </p>
-                  )}
+      {!!loading && <div> Loading... </div>}
+      {!loading && (
+        <>
+          {!product && <div> Product Not Found </div>}
+          {!!product && (
+            <div className="productItem">
+              <div className="product-wrapper">
+                <div className="image-container">
+                  <img src={product.image} alt="product-featured" />
                 </div>
-              </form>
+                <div className="product-details">
+                  <h4 className="heading"> {product.title} </h4>
+                  <p>
+                    {product.currency} {product.price}
+                  </p>
+                  <p>{product.description}</p>
+                  <form onSubmit={addItem} disabled={cart.isUpdating}>
+                    <div className="add-to-cart">
+                      <div>
+                        <input
+                          type="number"
+                          min={1}
+                          defaultValue={1}
+                          ref={quantityRef}
+                          onChange={(e) =>
+                            e.target.value <= 0 && (e.target.value = 1)
+                          }
+                        />
+                      </div>
+                      {!!login.isLoggedIn && (
+                        <button disabled={cart.isUpdating} type="submit">
+                          Add to cart
+                        </button>
+                      )}
+
+                      {!login.isLoggedIn && (
+                        <p>
+                          Please <Link to="/login"> login</Link> to add this
+                          item to cart
+                        </p>
+                      )}
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          )}
+        </>
       )}
     </div>
   );

@@ -11,6 +11,7 @@ export const ProductCard = ({ product }) => {
       className="product-link btn-link product-card"
       to={`/products/${product.id}`}
     >
+      {!!product.image && <img src={product.image} alt="product img"></img>}
       <p> {product?.id} </p>
       <div>
         <p> {product.title} </p>
