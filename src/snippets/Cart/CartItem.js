@@ -11,7 +11,7 @@ const CartItem = ({ item: cartItem = null }) => {
 
     const removeItem = () => {
         if (cartItem.productId) {
-            dispatch(removeItemFromCart(cartItem.productId));
+            dispatch(removeItemFromCart({ id: cartItem.productId }));
         }
     };
 

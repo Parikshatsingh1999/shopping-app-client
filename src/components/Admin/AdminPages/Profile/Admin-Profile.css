@@ -1,0 +1,14 @@
+.profile .form-element {
+    font-size: 18px;
+    display: flex;
+    margin-bottom: 2%;
+}
+
+.profile .form-element label {
+    flex: 0 0 20%;
+}
+
+.profile .form-element input {
+    font-size: 18px;
+    padding: 0.5%;
+}

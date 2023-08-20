@@ -6,19 +6,19 @@ import { createRequest } from "../../services/FetchBuidler";
 import { ProductCard } from "../../snippets/ProductCard/ProductCard";
 
 export const CollectionItem = () => {
-  const { id } = useParams();
+  const { collectionId } = useParams();
   const [collection, setCollection] = useState(null);
 
   useEffect(() => {
-    if (id) {
-      const path = `collections/${id}`;
+    if (collectionId) {
+      const path = `collections/${collectionId}`;
       createRequest.fetch(path).then((res) => {
         if (!res.error) {
           setCollection(res);
         }
       });
     }
-  }, [id]);
+  }, [collectionId]);
 
   return (
     <>

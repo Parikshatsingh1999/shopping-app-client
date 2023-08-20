@@ -16,15 +16,24 @@ export const userLogin = createAsyncThunk("userLogin", async ({ email, password 
         const data = await createRequest.fetch("login", { method: 'POST', payload: { email, password } });
         if (data?.accessToken) {
             alertMessage("Logged In successfully");
-            return data;
         } else if (data?.error) {
             alertMessage(data?.error);
-            return data;
         }
+        return data;
     } catch (error) {
         console.error("error while loggin in", error?.message);
         return error?.message || "Something went wrong";
     }
+})
+
+export const authLogin = createAsyncThunk('authLogin', async (callback, { dispatch }) => {
+    const data = await createRequest.fetch('auth', { method: 'POST' });
+    if (data.accessToken && callback.name) {
+        setTimeout(() => {
+            dispatch(callback.name?.(callback.payload));
+        })
+    }
+    return data;
 })
 
 const LoginSlice = createSlice({
@@ -53,6 +62,28 @@ const LoginSlice = createSlice({
         });
 
         builder.addCase(userLogin.fulfilled, (state, action) => {
+            if (action.payload?.accessToken) {
+                state.isLoggedIn = true;
+                state.token = action.payload?.accessToken;
+                createRequest.setToken(state.token);
+                sessionStorage.setItem("userLogged", true)
+            } else {
+                state.isLoggedIn = false;
+                createRequest.setToken("");
+                sessionStorage.setItem("userLogged", false)
+            }
+            state.isLoading = false;
+        });
+
+        builder.addCase(authLogin.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isLoggedIn = false;
+            state.token = "";
+            createRequest.setToken(state.token);
+            sessionStorage.setItem("userLogged", false)
+        });
+
+        builder.addCase(authLogin.fulfilled, (state, action) => {
             if (action.payload?.accessToken) {
                 state.isLoggedIn = true;
                 state.token = action.payload?.accessToken;

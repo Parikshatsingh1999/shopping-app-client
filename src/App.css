@@ -15,6 +15,12 @@
   color: unset;
   text-decoration: none;
   cursor: pointer;
+  background: transparent;
+  border: none;
+}
+
+.link {
+  color: #4444b6;
 }
 
 .app-header,

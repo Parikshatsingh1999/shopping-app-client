@@ -1,0 +1,15 @@
+.not-authorized {
+    color: red;
+    margin-top: 4%;
+}
+
+.admin-box .heading {
+    color: green;
+    margin-top: 2%;
+}
+
+.details-box {
+    max-width: 40%;
+    margin: auto;
+    text-align: left;
+}

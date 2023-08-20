@@ -10,15 +10,15 @@ import { Link } from "react-router-dom";
 export const ProductItem = () => {
   const cart = useSelector((state) => state.cart);
   const login = useSelector((state) => state.login);
-  const { id } = useParams();
+  const { productId } = useParams();
   const dispath = useDispatch();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const quantityRef = useRef();
 
   useEffect(() => {
-    if (id) {
-      const path = `products/${id}`;
+    if (productId) {
+      const path = `products/${productId}`;
       createRequest.fetch(path).then((res) => {
         if (!res.error) {
           setProduct(res);
@@ -30,7 +30,7 @@ export const ProductItem = () => {
         setLoading(false);
       });
     }
-  }, [id]);
+  }, [productId]);
 
   const addItem = (e) => {
     e.preventDefault();

@@ -1,0 +1,16 @@
+.col-list li {
+    margin-bottom: 2%;
+}
+
+.collection-form {
+    padding: 0 2%;
+}
+
+.collection-form ul {
+    padding: 0;
+    list-style-position: inside;
+}
+
+.collection-form li {
+    margin-bottom: 4%;
+}

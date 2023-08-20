@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { createRequest } from "../../services/FetchBuidler";
 import { alertMessage } from "../../helpers/alerts";
+import { authLogin } from "../login/loginSlice";
 
 const initialState = {
     items: [],
@@ -9,30 +10,42 @@ const initialState = {
     isUpdating: false
 }
 
-export const fetchCart = createAsyncThunk("fetchCart", async () => {
+export const fetchCart = createAsyncThunk("fetchCart", async (payload, { dispatch }) => {
     const data = await createRequest.fetch("cart");
+    if (data.error === "User not authenticated") {
+        await dispatch(authLogin())
+    }
     return data;
 });
 
-export const addItemToCart = createAsyncThunk("addItemToCart", async (payload) => {
+export const addItemToCart = createAsyncThunk("addItemToCart", async (payload, { dispatch }) => {
     if (!payload) {
         return null;
     }
     const data = await createRequest.fetch("cart", { method: 'POST', payload })
+    if (data.error === "User not authenticated") {
+        await dispatch(authLogin({ name: addItemToCart, payload }))
+    }
     return data;
 });
 
-export const removeItemFromCart = createAsyncThunk("removeItemFromCart", async (id) => {
-    if (!id) {
+export const removeItemFromCart = createAsyncThunk("removeItemFromCart", async (payload, { dispatch }) => {
+    if (!payload.id) {
         return null;
     }
-    const data = await createRequest.fetch("cart/remove", { method: 'POST', payload: { id } })
+    const data = await createRequest.fetch("cart/remove", { method: 'POST', payload })
+    if (data.error === "User not authenticated") {
+        await dispatch(authLogin({ name: removeItemFromCart, payload }))
+    }
     return data;
 });
 
-export const updateCartItem = createAsyncThunk("updateCartItem", async (payload) => {
+export const updateCartItem = createAsyncThunk("updateCartItem", async (payload, { dispatch }) => {
     if (payload.id) {
         const data = await createRequest.fetch("cart/update", { method: 'POST', payload })
+        if (data.error === "User not authenticated") {
+            await dispatch(authLogin({ name: updateCartItem, payload }))
+        }
         return data;
     }
     return null;

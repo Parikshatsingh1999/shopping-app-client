@@ -1,8 +1,10 @@
 import { alertMessage } from "../helpers/alerts";
 
 class CreateFetch {
+
     token = sessionStorage.getItem("accessToken") || "";
     App_Url = `/api/`;
+
     setToken(value) {
         this.token = value;
         sessionStorage.setItem("accessToken", this.token);

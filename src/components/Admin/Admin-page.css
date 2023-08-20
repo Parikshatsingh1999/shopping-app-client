@@ -1,0 +1,32 @@
+.admin-page {
+    display: flex;
+    padding: 2% 0;
+}
+
+.side-panel {
+    flex: 0 0 20%;
+    text-align: left;
+}
+
+.admin-main-wrapper {
+    flex-grow: 1;
+    padding-left: 6%;
+    text-align: left;
+}
+
+.form-element {
+    font-size: 18px;
+    display: flex;
+    margin-bottom: 2%;
+}
+
+.form-element label {
+    flex: 0 0 20%;
+}
+
+.form-element input,
+.form-element select,
+.form-element textarea {
+    font-size: 18px;
+    padding: 0.5%;
+}
